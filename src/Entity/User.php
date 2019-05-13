@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -31,42 +32,51 @@ class User implements UserInterface
      *
      * @ORM\Column(name="role", type="string", length=50, nullable=true, options={"default"="NULL"})
      */
-    private $role = 'NULL';
+    private $role;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="name", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @Assert\NotBlank
+     * @Assert\Regex("/[a-zA-Z]+/")
      */
-    private $name = 'NULL';
+    private $name;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="surname", type="string", length=200, nullable=true, options={"default"="NULL"})
+     * @Assert\NotBlank
+     * @Assert\Regex("/[a-zA-Z]+/")
      */
-    private $surname = 'NULL';
+    private $surname;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @Assert\NotBlank
+     * @Assert\Email(
+     *     message="El email '{{ value }}' no es valido"
+     * )
      */
-    private $email = 'NULL';
+    private $email;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @Assert\NotBlank
      */
-    private $password = 'NULL';
+    private $password;
 
     /**
      * @var DateTime|null
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $createdAt = 'NULL';
+    private $createdAt;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="user")

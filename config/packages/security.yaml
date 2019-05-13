@@ -7,12 +7,23 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory: { memory: ~ }
+        proveedor:
+            entity:
+                class: App\Entity\User
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
+            form_login:
+                login_path: login
+                check_path: login
+                provider: proveedor
+            logout:
+                path: /logout
+                target: /
 
             # activate different ways to authenticate
 
@@ -25,5 +36,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/tarea, roles: ROLE_USER }
+         - { path: ^/tareas, roles: ROLE_USER }
+         - { path: ^/crear-tarea, roles: ROLE_USER }
+         - { path: ^/mis-tareas, roles: ROLE_USER }
+         - { path: ^/editar-tarea, roles: ROLE_USER }
+         - { path: ^/borrar-tarea, roles: ROLE_USER }
